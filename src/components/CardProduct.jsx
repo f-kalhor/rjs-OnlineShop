@@ -6,8 +6,19 @@ import { TbShoppingBagCheck } from "react-icons/tb";
 
 import {shortenTitle} from "../helper/helper";
 import styles from "./Card.module.css";
+import { useCart } from "../contextData/CartContext";
+
+
 function CardProduct({ data }) {
   const { title, image, price, id } = data;
+  const [state,dispatch]=useCart()
+
+  const addHandler=()=>{
+    dispatch({type:"INCREASE",payload:data})
+    console.log(state);
+    
+  }
+
   return (
     <div className={styles.card}>
       <img src={image} alt={title} />
@@ -18,7 +29,7 @@ function CardProduct({ data }) {
           <TbListDetails />
         </Link>
         <div>
-          <button>
+          <button onClick={addHandler}>
             <TbShoppingBagCheck />
           </button>
         </div>

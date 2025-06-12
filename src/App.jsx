@@ -4,9 +4,11 @@ import Checkout from "./pages/CheckoutPage";
 import DetailPage from "./pages/DetailPage";
 import PageNotFound from "./pages/404";
 import { ProductsProvider } from "./contextData/ProductsContext";
+import {CartProvider} from "./contextData/CartContext";
 
 function App() {
   return (
+    <CartProvider>
     <ProductsProvider>
       <Routes>
         <Route path="/" element={<Navigate to="/products" />} />
@@ -16,6 +18,7 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </ProductsProvider>
+    </CartProvider>
   );
 }
 
