@@ -26,5 +26,16 @@ const useProducts=()=>{
     const products=useContext(ProductsContext)
     return products;
 }
+const useProductsDetailes =(id)=>{
+    const products=useContext(ProductsContext)
+    console.log(products);
+    console.log(id);
+    
+    const result=products.find(item=>item.id === id)
+    console.log("res",result);
+    
+    return result;
+  }
+  
 
-export { ProductsProvider,useProducts}
+export { ProductsProvider,useProducts,useProductsDetailes}

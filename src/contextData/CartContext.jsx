@@ -8,17 +8,20 @@ const initialState = {
   total: 0,
   checkout: false,
 };
+
 const reducer = (state, action) => {
+  
   switch (action.type) {
     case "ADD_ITEM":
-      if (!state.selectedItem.find((item) => item.id === action.payload.id)) {
-        state.selectedItem.push({ ...action.payload, quantity: 1 });
-      }
-      return {
-        ...state,
-        ...sumProducts(state.selectedItem),
-        checkout: false,
-      };
+  if (!state.selectedItem.find((item) => item.id === action.payload.id)) {
+    const updatedItems = [...state.selectedItem, { ...action.payload, quantity: 1 }];
+    return {
+      selectedItem: updatedItems,
+      ...sumProducts(updatedItems),
+      checkout: false,
+    };
+  }
+
 
     case "REMOVE_ITEM":
       const newSelectedItem = state.selectedItem.filter(
@@ -42,17 +45,19 @@ const reducer = (state, action) => {
         ...sumProducts(state.selectedItem),
       };
 
-    case "DECREASE":
-      const decreaseIndex = state.selectedItem.findIndex(
-        (item) => item.id === action.payload.id
-      );
-      state.selectedItem[decreaseIndex].quantity--;
-
-      return {
-        ...state,
-        ...sumProducts(state.selectedItem),
-      };
-
+      case "DECREASE":
+        const decreasedItems = state.selectedItem.map((item) =>
+          item.id === action.payload.id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        );
+        console.log("decrese",decreasedItems);
+        
+        return {
+          selectedItem: decreasedItems,
+          ...sumProducts(decreasedItems),
+          checkout:false
+        };
       case "CHECKOUT":
         return{
             selectedItem:[],
@@ -78,5 +83,6 @@ const useCart = () => {
   const { state, dispatch } = useContext(CartContext);
   return [state, dispatch];
 };
+
 
 export { CartProvider, useCart };

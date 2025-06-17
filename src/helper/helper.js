@@ -42,14 +42,25 @@ const getInitialQuery = (searchParams) => {
 
   return query;
 }
-
 const sumProducts = (products) => {
-  const itemsCount = products.reduce((cur, acc) => cur + acc.quantity, 0)
-  const total = products.reduce((cur, acc) => cur + acc.price * acc.quantity, 0).toFixed()
+  const itemsCount = products.reduce((acc, cur) => acc + cur.quantity, 0)
+  const total = products.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0).toFixed(2)
 
-  return{
-    itemsCount,total
+  return {
+    itemsCount,
+    total
   }
 }
 
-export { shortenTitle, searchProducts, filteredProducts, createQueryObject, getInitialQuery, sumProducts };
+const productQuantity = (state, id) => {
+  const index = state.selectedItem.findIndex((item) => item.id === id)
+  if (index === -1) {
+    return 0
+  } else {
+    return state.selectedItem[index].quantity
+  }
+}
+
+
+
+export { shortenTitle, searchProducts, filteredProducts, createQueryObject, getInitialQuery, sumProducts,productQuantity };
