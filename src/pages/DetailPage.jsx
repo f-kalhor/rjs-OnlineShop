@@ -30,7 +30,7 @@ function DetailPage() {
         <div>
           <span className={styles.price}>
             <IoMdPricetag />
-            {price}
+            {price} $
           </span>
           <Link to="/products">
             <FaArrowLeft />
